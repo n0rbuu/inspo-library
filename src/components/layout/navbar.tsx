@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, Library, Home, Tag, Settings } from "lucide-react";
+import { PlusCircle, Library, Home, Settings } from "lucide-react";
 
 export function Navbar() {
   return (
@@ -17,18 +17,6 @@ export function Navbar() {
             <Button variant="ghost" size="sm">
               <Home className="h-4 w-4 mr-2" />
               Home
-            </Button>
-          </Link>
-          <Link href="/bookmarks" passHref>
-            <Button variant="ghost" size="sm">
-              <Library className="h-4 w-4 mr-2" />
-              Library
-            </Button>
-          </Link>
-          <Link href="/tags" passHref>
-            <Button variant="ghost" size="sm">
-              <Tag className="h-4 w-4 mr-2" />
-              Tags
             </Button>
           </Link>
           <Link href="/settings" passHref>

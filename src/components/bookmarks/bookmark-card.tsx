@@ -36,7 +36,7 @@ export function BookmarkCard({ bookmark }: BookmarkCardProps) {
         </div>
         <div className="flex flex-wrap gap-1">
           {bookmark.tags.map((tag) => (
-            <Link key={tag} href={`/tags/${tag}`} passHref>
+            <Link key={tag} href={`/?tab=library&tag=${encodeURIComponent(tag)}`} passHref>
               <Badge variant="secondary" className="cursor-pointer hover:bg-secondary/80">
                 {tag}
               </Badge>

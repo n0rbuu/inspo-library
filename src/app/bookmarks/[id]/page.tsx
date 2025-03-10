@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { MainLayout } from "@/components/layout/main-layout";
 import { BookmarkForm } from "@/components/bookmarks/bookmark-form";
 import { MediaGrid } from "@/components/media/media-grid";
@@ -18,14 +18,9 @@ import { Pencil, Trash2, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 
-interface BookmarkPageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default function BookmarkPage({ params }: BookmarkPageProps) {
+export default function BookmarkPage() {
   const router = useRouter();
+  const params = useParams();
   const [bookmarkId, setBookmarkId] = useState<number | null>(null);
   
   const [bookmark, setBookmark] = useState<Bookmark | null>(null);
@@ -36,14 +31,20 @@ export default function BookmarkPage({ params }: BookmarkPageProps) {
   
   // Parse the ID in useEffect to avoid synchronous access issues
   useEffect(() => {
+    if (!params || typeof params.id !== 'string') {
+      toast.error("Invalid bookmark ID");
+      router.push("/");
+      return;
+    }
+    
     const id = parseInt(params.id);
     if (isNaN(id)) {
       toast.error("Invalid bookmark ID");
-      router.push("/bookmarks");
+      router.push("/");
       return;
     }
     setBookmarkId(id);
-  }, [params.id, router]);
+  }, [params, router]);
   
   const loadBookmark = async () => {
     if (bookmarkId === null) return;
@@ -56,7 +57,7 @@ export default function BookmarkPage({ params }: BookmarkPageProps) {
       const bookmarkData = await bookmarkRepository.getById(bookmarkId);
       if (!bookmarkData) {
         toast.error("Bookmark not found");
-        router.push("/bookmarks");
+        router.push("/");
         return;
       }
       
@@ -91,7 +92,7 @@ export default function BookmarkPage({ params }: BookmarkPageProps) {
       await bookmarkRepository.delete(bookmarkId);
       
       toast.success("Bookmark deleted successfully");
-      router.push("/bookmarks");
+      router.push("/");
     } catch (error) {
       console.error("Error deleting bookmark:", error);
       toast.error("Failed to delete bookmark");
@@ -155,7 +156,7 @@ export default function BookmarkPage({ params }: BookmarkPageProps) {
             )}
             <div className="flex flex-wrap gap-1 mt-3">
               {bookmark.tags.map(tag => (
-                <Link key={tag} href={`/tags/${tag}`} passHref>
+                <Link key={tag} href={`/?tab=library&tag=${encodeURIComponent(tag)}`} passHref>
                   <Badge variant="secondary" className="cursor-pointer hover:bg-secondary/80">
                     {tag}
                   </Badge>

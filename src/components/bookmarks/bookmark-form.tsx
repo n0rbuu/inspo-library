@@ -57,8 +57,8 @@ export function BookmarkForm({ bookmark, onSuccess }: BookmarkFormProps) {
         
         toast.success("Bookmark created successfully");
         
-        // Navigate to the new bookmark page
-        router.push(`/bookmarks/${newBookmarkId}`);
+        // Navigate to the home page with the library tab selected
+        router.push(`/?tab=library`);
       }
       
       if (onSuccess) {

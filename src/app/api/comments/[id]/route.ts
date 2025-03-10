@@ -11,10 +11,13 @@ const COMMENTS_DIR = path.join(BOOKMARKS_DIR, 'comments');
 // GET /api/comments/[id] - Get a comment by ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const id = parseInt(params.id);
+    // Await the params object
+    const { id: idString } = context.params;
+    const id = parseInt(idString);
+    
     if (isNaN(id)) {
       return NextResponse.json({ error: 'Invalid comment ID' }, { status: 400 });
     }
@@ -30,7 +33,7 @@ export async function GET(
     
     return NextResponse.json(comment);
   } catch (error) {
-    console.error(`Error getting comment ${params.id}:`, error);
+    console.error(`Error getting comment:`, error);
     return NextResponse.json({ error: 'Failed to get comment' }, { status: 500 });
   }
 }
@@ -38,10 +41,13 @@ export async function GET(
 // PUT /api/comments/[id] - Update a comment
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const id = parseInt(params.id);
+    // Await the params object
+    const { id: idString } = context.params;
+    const id = parseInt(idString);
+    
     if (isNaN(id)) {
       return NextResponse.json({ error: 'Invalid comment ID' }, { status: 400 });
     }
@@ -67,7 +73,7 @@ export async function PUT(
     
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error(`Error updating comment ${params.id}:`, error);
+    console.error(`Error updating comment:`, error);
     return NextResponse.json({ error: 'Failed to update comment' }, { status: 500 });
   }
 }
@@ -75,10 +81,13 @@ export async function PUT(
 // DELETE /api/comments/[id] - Delete a comment
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const id = parseInt(params.id);
+    // Await the params object
+    const { id: idString } = context.params;
+    const id = parseInt(idString);
+    
     if (isNaN(id)) {
       return NextResponse.json({ error: 'Invalid comment ID' }, { status: 400 });
     }
@@ -94,7 +103,7 @@ export async function DELETE(
     
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error(`Error deleting comment ${params.id}:`, error);
+    console.error(`Error deleting comment:`, error);
     return NextResponse.json({ error: 'Failed to delete comment' }, { status: 500 });
   }
 } 

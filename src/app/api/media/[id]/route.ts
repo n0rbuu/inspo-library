@@ -32,10 +32,13 @@ async function readMediaFile(id: number, type: 'image' | 'video'): Promise<strin
 // GET /api/media/[id] - Get a media item by ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const id = parseInt(params.id);
+    // Await the params object
+    const { id: idString } = context.params;
+    const id = parseInt(idString);
+    
     if (isNaN(id)) {
       return NextResponse.json({ error: 'Invalid media ID' }, { status: 400 });
     }
@@ -63,7 +66,7 @@ export async function GET(
     
     return NextResponse.json(mediaItem);
   } catch (error) {
-    console.error(`Error getting media item ${params.id}:`, error);
+    console.error(`Error getting media item:`, error);
     return NextResponse.json({ error: 'Failed to get media item' }, { status: 500 });
   }
 }
@@ -71,10 +74,13 @@ export async function GET(
 // DELETE /api/media/[id] - Delete a media item
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const id = parseInt(params.id);
+    // Await the params object
+    const { id: idString } = context.params;
+    const id = parseInt(idString);
+    
     if (isNaN(id)) {
       return NextResponse.json({ error: 'Invalid media ID' }, { status: 400 });
     }
@@ -103,7 +109,7 @@ export async function DELETE(
     
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error(`Error deleting media item ${params.id}:`, error);
+    console.error(`Error deleting media item:`, error);
     return NextResponse.json({ error: 'Failed to delete media item' }, { status: 500 });
   }
 } 

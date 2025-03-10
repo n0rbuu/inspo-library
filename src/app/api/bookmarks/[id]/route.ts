@@ -20,10 +20,13 @@ fs.ensureDirSync(MEDIA_METADATA_DIR);
 // GET /api/bookmarks/[id] - Get a bookmark by ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const id = parseInt(params.id);
+    // Await the params object
+    const { id: idString } = context.params;
+    const id = parseInt(idString);
+    
     if (isNaN(id)) {
       return NextResponse.json({ error: 'Invalid bookmark ID' }, { status: 400 });
     }
@@ -39,7 +42,7 @@ export async function GET(
     
     return NextResponse.json(bookmark);
   } catch (error) {
-    console.error(`Error getting bookmark ${params.id}:`, error);
+    console.error(`Error getting bookmark:`, error);
     return NextResponse.json({ error: 'Failed to get bookmark' }, { status: 500 });
   }
 }
@@ -47,10 +50,13 @@ export async function GET(
 // PUT /api/bookmarks/[id] - Update a bookmark
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const id = parseInt(params.id);
+    // Await the params object
+    const { id: idString } = context.params;
+    const id = parseInt(idString);
+    
     if (isNaN(id)) {
       return NextResponse.json({ error: 'Invalid bookmark ID' }, { status: 400 });
     }
@@ -76,7 +82,7 @@ export async function PUT(
     
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error(`Error updating bookmark ${params.id}:`, error);
+    console.error(`Error updating bookmark:`, error);
     return NextResponse.json({ error: 'Failed to update bookmark' }, { status: 500 });
   }
 }
@@ -84,10 +90,13 @@ export async function PUT(
 // DELETE /api/bookmarks/[id] - Delete a bookmark
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const id = parseInt(params.id);
+    // Await the params object
+    const { id: idString } = context.params;
+    const id = parseInt(idString);
+    
     if (isNaN(id)) {
       return NextResponse.json({ error: 'Invalid bookmark ID' }, { status: 400 });
     }
@@ -143,7 +152,7 @@ export async function DELETE(
     
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error(`Error deleting bookmark ${params.id}:`, error);
+    console.error(`Error deleting bookmark:`, error);
     return NextResponse.json({ error: 'Failed to delete bookmark' }, { status: 500 });
   }
 } 
