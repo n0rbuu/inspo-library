@@ -39,10 +39,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# User data directory - contains personal bookmarks and media
-/data/
-# Keep the directory structure but not the content
-!/data/.gitkeep
-!/data/bookmarks/.gitkeep
-!/data/media/.gitkeep
