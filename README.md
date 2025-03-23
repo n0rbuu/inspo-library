@@ -1,6 +1,6 @@
 # Inspo Library
 
-A Next.js application that allows users to upload and manage things that inspire them.
+A Next.js webapp that helps users save photos and screenshots of things that inspire them.
 
 ## Setup Instructions
 
@@ -59,7 +59,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the a
 
 - Upload and manage inspiring content
 - Organize items with tags
-- Add multiple screenshots and URLs to each item
+- Add multiple images and URLs to each item
 - Notes for additional context
 
 ## License
